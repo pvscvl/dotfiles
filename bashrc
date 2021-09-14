@@ -9,3 +9,5 @@ export colorflag="-G"
 alias ls="command ls -lhFX --color=always --sort=size" 
 alias ipint="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias ipext="dig TXT +short o-o.myaddr.l.google.com @ns1.google.com"
+alias _update="sudo apt-get update && sudo apt-get upgrade -y"
+
