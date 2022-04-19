@@ -41,8 +41,18 @@ alias macupdate='sudo softwareupdate -i -a'
 
 #alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1' ; dig @resolver4.opendns.com myip.opendns.com +short "
 alias ips='printf "Internal IP:\t"; ipconfig getifaddr en0; printf "External IP:\t"; dig @resolver4.opendns.com myip.opendns.com +short' 
-alias internalip="ipconfig getifaddr en0"
+alias ipinfo='echo WiFi:; printf "Internal IP:\t"; localipwifi ;printf "MAC address:\t" ; _macwifi ; printf "Gateway:\t"; _gwwifi ;  printf "Nameserver:\t";_dnswifi ; echo LAN:;printf "Internal IP:\t"; localiplan ;printf "MAC address:\t" ; _maclan ; printf "Gateway:\t"; _gwlan ;  printf "Nameserver:\t";_dnslan;  printf "\nExternal IP:\t"; externalip' 
+alias localipwifi="ipconfig getifaddr en0"
+alias localips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2  "
 alias externalip="dig @resolver4.opendns.com myip.opendns.com +short"
+alias _dnswifi="ipconfig getsummary en0 | grep siaddr | cut -c 10- "
+alias _macwifi="ipconfig getsummary en0 | grep chaddr | cut -c 10- "
+alias _gwwifi="route -n get default | grep 'gateway' | awk '{print \$2}'"
+alias localiplan="ipconfig getifaddr en6"
+alias _dnslan="ipconfig getsummary en6 | grep siaddr | cut -c 10- "
+alias _maclan="ipconfig getsummary en6 | grep chaddr | cut -c 10- "
+alias _gwlan="route -n get default | grep 'gateway' | awk '{print \$2}'"
+
 
 alias mkdirtime='mkdir $(date +\%Y-\%m-\%d_\%H\%M)'   
 
