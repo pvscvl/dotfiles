@@ -23,7 +23,7 @@ alias lss="command gls -lhFX --color=always --group-directories-first"
 #alias ls="command gls -lhFX --color=always"
 #alias ls="command gls -lhFX --color=always --sort=size" 
 
-
+$ echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M\\t   ); vcgencmd measure_temp | cut -c 6-
 
 alias cbdl='noglob youtube-dl -o "/Users/pascal/_cb/%(id)s/%(title)s.%(ext)s" --ignore-config --restrict-filenames --no-warnings --no-part '
 
