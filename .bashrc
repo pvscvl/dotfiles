@@ -13,4 +13,6 @@ alias internalip="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias _update="sudo apt-get update && sudo apt-get upgrade -y"
-alias dotupdate=
+
+#alias _temp="echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M\\t   ); vcgencmd measure_temp | cut -c 6- "
+#alias dotupdate=
