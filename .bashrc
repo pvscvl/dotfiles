@@ -12,7 +12,7 @@ alias internalip="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 #alias externalip="dig TXT +short o-o.myaddr.l.google.com @ns1.google.com"
 
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias _update="sudo apt-get update && sudo apt-get upgrade -y"
+alias piupdate="sudo apt-get update && sudo apt-get upgrade -y"
 
-alias _temp="echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M) \ \ \ \ ; vcgencmd measure_temp | cut -c 6- "
+alias pitemp="echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M) \ \ \ \ ; vcgencmd measure_temp | cut -c 6- "
 alias dotupdate='cd && mkdir dotfiles; cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc >> .bashrc'
