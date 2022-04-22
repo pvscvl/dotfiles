@@ -15,4 +15,4 @@ alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias piupdate="sudo apt-get update && sudo apt-get upgrade -y"
 
 alias pitemp="echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M) \ \ \ \ ; vcgencmd measure_temp | cut -c 6- "
-alias dotupdate='cd && mkdir dotfiles; cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc >> .bashrc'
+alias dotupdate='cd && mkdir dotfiles; cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc > .bashrc'
