@@ -23,7 +23,7 @@ alias lss="command gls -lhFX --color=always --group-directories-first"
 #alias ls="command gls -lhFX --color=always"
 #alias ls="command gls -lhFX --color=always --sort=size" 
 
-$ echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M\\t   ); vcgencmd measure_temp | cut -c 6-
+alias _time="printf '$(date +\%Y-\%m-\%d) \t$(date +\%H:\%M)\t'"  
 
 alias cbdl='noglob youtube-dl -o "/Users/pascal/_cb/%(id)s/%(title)s.%(ext)s" --ignore-config --restrict-filenames --no-warnings --no-part '
 
@@ -39,7 +39,7 @@ alias macupdate='sudo softwareupdate -i -a'
 
 
 
-#alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1' ; dig @resolver4.opendns.com myip.opendns.com +short "
+#alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print \$1' ; dig @resolver4.opendns.com myip.opendns.com +short "
 alias ips='printf "Internal IP:\t"; ipconfig getifaddr en0; printf "External IP:\t"; dig @resolver4.opendns.com myip.opendns.com +short' 
 alias ipinfo='echo WiFi:; printf "Internal IP:\t"; localipwifi ;printf "MAC address:\t" ; _macwifi ; printf "Gateway:\t"; _gwwifi ;  printf "Nameserver:\t";_dnswifi ; echo LAN:;printf "Internal IP:\t"; localiplan ;printf "MAC address:\t" ; _maclan ; printf "Gateway:\t"; _gwlan ;  printf "Nameserver:\t";_dnslan;  printf "\nExternal IP:\t"; externalip' 
 alias localipwifi="ipconfig getifaddr en0"
@@ -67,6 +67,11 @@ alias iperfu="echo '############################################\niperf -c 10.0.
 
 #### Functions
 #md5sum filename
+
+
+
+alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > .zshrc'
+
 function md5sum() {
         md5 "$@" || return $?
 }

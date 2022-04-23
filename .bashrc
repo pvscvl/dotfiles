@@ -8,7 +8,7 @@ export colorflag="-G"
 alias ls="command ls -lhFX --color=always" 
 #alias localip="ipconfig getifaddr en0"
 
-alias internalip="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias internalip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print \$1'"
 #alias externalip="dig TXT +short o-o.myaddr.l.google.com @ns1.google.com"
 
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
