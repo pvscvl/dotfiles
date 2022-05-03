@@ -70,7 +70,7 @@ alias iperfu="echo '############################################\niperf -c 10.0.
 
 
 
-alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > .zshrc'
+alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt'
 
 function md5sum() {
         md5 "$@" || return $?
