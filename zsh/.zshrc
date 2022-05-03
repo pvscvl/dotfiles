@@ -74,8 +74,8 @@ source $DOTFILESHOME/.dotfiles/.funtions
 #md5sum filename
 
 
-
-alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt'
+https://github.com/pvscvl/dotfiles/blob/main/zsh/.zshrc
+alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt; cd ./.dotfiles && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.exports > ./_dotfiles/.exports; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.aliases > ./_dotfiles/.aliases; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.functions > ./_dotfiles/.functions;'
 
 #function md5sum() {
 #        md5 "$@" || return $?
