@@ -1,1 +1,40 @@
-test
+function md5sum() {
+        md5 "$@" || return $?
+}
+
+# Copy w/ progress
+cp_p (){
+        rsync -WavP --human-readable --progress $1 $2
+        }
+
+#creates a pw in this pattern XXXX-XXXX-XXXX-XXXX and copies it to clipboard
+pwg () {
+        pwgvar1=$(pwgen  -Bc -1 4)
+        pwgvar2=$(pwgen  -BA -1 4)
+        pwgvar3=$(pwgen  -BA -1 4)
+        pwgvar4=$(pwgen  -BA -1 4)
+        pwgvar5=$(echo $pwgvar1 $pwgvar2 $pwgvar3 $pwgvar4)
+            echo -n  ${pwgvar5// /-}  | pbcopy
+            echo ${pwgvar5// /-} 
+        }
+
+#creates a pw in this pattern XXXXXX-XXXXXX-XXXXXX and copies it to clipboard
+pwg2 () {
+        pwg2var1=$(pwgen  -Bc -1 6)
+        pwg2var2=$(pwgen  -BA -1 6)
+        pwg2var3=$(pwgen  -BA -1 6)
+        pwg2var4=$(echo $pwg2var1 $pwg2var2 $pwg2var3)
+            echo -n  ${pwg2var4// /-}  | pbcopy
+            echo ${pwg2var4// /-} 
+        }
+
+#details about timemachine backup status
+tmstatus () {
+            eval $(tmutil status | grep -E '[^}];$' | perl -p -e 's/^\s+[\"]*//g;' -e 's/[\"]*\s+\=\s+/=/g') || (echo "Something get wrong..." && return 1)
+
+                if [[ $Running -eq 1 ]]
+                    then export LC_NUMERIC="en_US.UTF-8"
+                    [[ $BackupPhase == "Copying" ]] && Percent=$(printf '%0.2f%%' `bc <<< $Percent*100`) && echo "${DateOfStateChange}\n${BackupPhase} backup to ${DestinationMountPoint}\n${files} files backed up. $((${bytes:-0}/1000000000)) GB\n${totalFiles} files in total. $((${totalBytes:-0}/1000000000)) GB\nProgress: ${Percent} \tETA: ~$((${TimeRemaining:-0}/60)) min." || echo "${DateOfStateChange} ${BackupPhase} (Destination ${DestinationID})."                                
+                    else echo "TimeMachine backup is not running."
+                fi
+            }
