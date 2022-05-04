@@ -73,8 +73,6 @@ source $DOTFILESHOME/.dotfiles/.funtions
 #### Functions
 #md5sum filename
 
-
-https://github.com/pvscvl/dotfiles/blob/main/zsh/.zshrc
 alias dotupdate='cd && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt; cd .dotfiles/ ; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.exports > .exports; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.aliases > .aliases; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.functions > .functions'
 
 #function md5sum() {
