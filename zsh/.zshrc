@@ -13,9 +13,9 @@ export RPROMPT=%D{%H:%M:%S}
 
 
 DOTFILESHOME=$HOME
-source $DOTFILESHOME/_dotfiles/.export
-source $DOTFILESHOME/_dotfiles/.aliases
-source $DOTFILESHOME/_dotfiles/.funtions
+source $DOTFILESHOME/.dotfiles/.export
+source $DOTFILESHOME/.dotfiles/.aliases
+source $DOTFILESHOME/.dotfiles/.funtions
 #alias backuprc='cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt'
 #alias o="open ."
 #alias genpasswd='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 20`'
