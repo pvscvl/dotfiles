@@ -28,6 +28,17 @@ pwg2 () {
             echo ${pwg2var4// /-} 
         }
 
+pwg3 () {
+        pwg3var=$(genpasswd)
+            echo -n  ${pwg3var// /-}  | pbcopy
+            echo ${pwg3var// /-} 
+        }
+
+
+genpasswd
+
+
+
 #details about timemachine backup status
 tmstatus () {
             eval $(tmutil status | grep -E '[^}];$' | perl -p -e 's/^\s+[\"]*//g;' -e 's/[\"]*\s+\=\s+/=/g') || (echo "Something get wrong..." && return 1)
