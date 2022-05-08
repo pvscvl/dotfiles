@@ -60,4 +60,3 @@ alias iperfu="echo '############################################\niperf -c 10.0.
 #alias _dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt'
 alias _dotupdate='cd && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.aliases > ./.dotfiles/.aliases ; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.exports > ./.dotfiles/.exports ; curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/zsh/.dotfiles/.functions > ./.dotfiles/.functions '
 
-         #TEST2
