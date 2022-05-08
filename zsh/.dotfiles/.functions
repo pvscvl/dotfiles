@@ -48,3 +48,5 @@ tmstatus () {
                     else echo "TimeMachine backup is not running."
                 fi
             }
+
+            #TEST
