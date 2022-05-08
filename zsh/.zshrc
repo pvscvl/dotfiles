@@ -120,5 +120,5 @@ alias _dotupdate='cd && sudo curl https://raw.githubusercontent.com/pvscvl/dotfi
 
 #has to be at the end of the file
 
-         #TEST
+         #TEST2
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
