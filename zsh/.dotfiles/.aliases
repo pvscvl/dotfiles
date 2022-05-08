@@ -1,11 +1,11 @@
-alias backuprc='cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt'
+#alias backuprc='cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt'
 alias o="open ."
 alias genpasswd='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 20`'
 alias ping="command ping --apple-time"
 
 
 
-alias lss="command gls -lhFX --color=always --group-directories-first"
+alias ls="command gls -lhFX --color=always --group-directories-first"
 #alias ls="command ls -lhF ${colorflag}"
 #alias ls="command ls  ${colorflag}"
 #alias ls="command gls -lhFX --color=always"
@@ -58,4 +58,4 @@ alias iperfu="echo '############################################\niperf -c 10.0.
 
 
 
-alias dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt'
+alias _dotupdate='cd && mkdir dotfiles; cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && sudo curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.zshrc > tmpzshrc.txt && sudo cp tmpzshrc.txt .zshrc && rm tmpzshrc.txt'

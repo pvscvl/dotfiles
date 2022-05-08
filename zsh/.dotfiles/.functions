@@ -8,7 +8,7 @@ cp_p (){
         }
 
 #creates a pw in this pattern XXXX-XXXX-XXXX-XXXX and copies it to clipboard
-pwg () {
+pwgen () {
         pwgvar1=$(pwgen  -Bc -1 4)
         pwgvar2=$(pwgen  -BA -1 4)
         pwgvar3=$(pwgen  -BA -1 4)
@@ -19,7 +19,7 @@ pwg () {
         }
 
 #creates a pw in this pattern XXXXXX-XXXXXX-XXXXXX and copies it to clipboard
-pwg2 () {
+pwgen2 () {
         pwg2var1=$(pwgen  -Bc -1 6)
         pwg2var2=$(pwgen  -BA -1 6)
         pwg2var3=$(pwgen  -BA -1 6)
@@ -28,14 +28,13 @@ pwg2 () {
             echo ${pwg2var4// /-} 
         }
 
-pwg3 () {
+pwgen3 () {
         pwg3var=$(genpasswd)
             echo -n  ${pwg3var// /-}  | pbcopy
             echo ${pwg3var// /-} 
         }
 
 
-genpasswd
 
 
 
