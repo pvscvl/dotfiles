@@ -1,7 +1,7 @@
 #alias backuprc='cp .zshrc ./dotfiles/zshrc-$(date +\%Y-\%m-\%d_\%H\%M).txt'
 alias o="open ."
 #alias genpasswd='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 20`'
-alias genpasswd='echo `env LC_CTYPE=C tr -cd "a-zA-Z0-9._#+!@$%&§-" < /dev/urandom | head -c 20`'
+alias genpasswd='echo `env LC_CTYPE=C tr -cd "a-zA-Z0-9._#+!@%&-" < /dev/urandom | head -c 20`'
 alias genpasswd4='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | head -c 4`'
 alias genpasswd6='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | head -c 6`'
 alias ping="command ping --apple-time"
