@@ -39,7 +39,7 @@ keygen4 () {
         pwg4x4var1=$(genpasswd4)
         pwg4x4var2=$(genpasswd4)
         pwg4x4var3=$(genpasswd4)
-        pwg4x4var4=(echo $pwg4x4var0 $pwg4x4var1 $pwg4x4var2 $pwg4x4var3)
+        pwg4x4var4=(echo $pwg4x4var0-$pwg4x4var1-$pwg4x4var2-$pwg4x4var3)
             echo -n  ${pwg4x4var4// /-}  | pbcopy
             echo ${pwg4x4var4// /-} 
         }
@@ -48,7 +48,7 @@ keygen6 () {
         pwg6x3var0=$(genpasswd6)
         pwg6x3var1=$(genpasswd6)
         pwg6x3var2=$(genpasswd6)
-        pwg6x3var3=(echo $pwg6x3var0 $pwg6x3var1 $pwg6x3var2 )
+        pwg6x3var3=(echo $pwg6x3var0-$pwg6x3var1-$pwg6x3var2 )
             echo -n  ${pwg6x3var3// /-}  | pbcopy
             echo ${pwg6x3var3// /-} 
         }
