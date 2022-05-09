@@ -5,14 +5,14 @@ export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 export colorflag="-G"
 
 
-alias ls="command ls -lhFX --color=always" 
+alias ls="command ls -alhFX --color=always" 
 #alias localip="ipconfig getifaddr en0"
 
 alias internalip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print \$1'"
 #alias externalip="dig TXT +short o-o.myaddr.l.google.com @ns1.google.com"
 
 alias externalip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias piupdate="sudo apt-get update && sudo apt-get upgrade -y"
+alias _update="sudo apt-get update && sudo apt-get upgrade -y"
 
 alias pitemp="echo -n  $(date +\%Y-\%m-\%d) $(date +\%H:\%M) \ \ \ \ ; vcgencmd measure_temp | cut -c 6- "
-alias dotupdate='cd && mkdir dotfiles; cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc > .bashrc'
+alias _dotupdate='cd && mkdir dotfiles; cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt && curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc > .bashrc'
