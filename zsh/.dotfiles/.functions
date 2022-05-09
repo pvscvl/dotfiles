@@ -28,13 +28,13 @@ pwgen2 () {
             echo ${pwg2var4// /-} 
         }
 
-pwgen3 () {
+keygen () {
         pwg3var=$(genpasswd)
             echo -n  ${pwg3var// /-}  | pbcopy
             echo ${pwg3var// /-} 
         }
 
-pwgen4x4 () {
+keygen4 () {
         pwg4x4var0=$(genpasswd4)
         pwg4x4var1=$(genpasswd4)
         pwg4x4var2=$(genpasswd4)
@@ -44,7 +44,7 @@ pwgen4x4 () {
             echo ${pwg4x4var4// /-} 
         }
 
-pwgen6x3 () {
+keygen6 () {
         pwg6x3var0=$(genpasswd6)
         pwg6x3var1=$(genpasswd6)
         pwg6x3var2=$(genpasswd6)
