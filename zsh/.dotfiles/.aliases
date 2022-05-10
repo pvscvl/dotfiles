@@ -6,7 +6,11 @@ alias genpasswd4='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | head 
 alias genpasswd6='echo `env LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | head -c 6`'
 alias ping="command ping --apple-time"
 
-
+alias pwg='keygen'
+alias pwg2='keygen4x4'
+alias pwg3='keygen6x3'
+alias keygen2='keygen4x4'
+alias keygen3='keygen6x3'
 
 alias ls="command gls -lhFX --color=always --group-directories-first"
 #alias ls="command ls -lhF ${colorflag}"
