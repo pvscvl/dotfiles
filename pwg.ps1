@@ -17,6 +17,9 @@ $password += Get-RandomCharacters -length 4 -characters 'abcdefghikmnoprstuvwxyz
 $password += Get-RandomCharacters -length 2 -characters '1234567890'
  
 $password = Shuffle-String $password
-echo -n $password | Clip
+echo -n $password | Set-Clipboard
 Write-Host ""
-Write-Host $password
+Write-Host "`t $password"
+
+
+ 
