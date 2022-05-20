@@ -121,6 +121,6 @@ alias _dotupdate='cd && sudo curl https://raw.githubusercontent.com/pvscvl/dotfi
 #has to be at the end of the file
 
 neofetch
-source /usr/local/opt/powerlevel9k/powerlevel9k.zsh-theme
+#source /usr/local/opt/powerlevel9k/powerlevel9k.zsh-theme
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
