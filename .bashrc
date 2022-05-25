@@ -5,7 +5,8 @@ export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 export colorflag="-G"
 
 
-alias ls="command ls -alhFX --color=always" 
+#alias ls="command ls -alhFX --color=always" 
+alias ls="ls -alhFX --color=always" 
 #alias localip="ipconfig getifaddr en0"
 
 alias internalip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print \$1'"
