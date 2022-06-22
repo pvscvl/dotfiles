@@ -12,6 +12,10 @@ alias pwg3='keygen6x3'
 alias keygen2='keygen4x4'
 alias keygen3='keygen6x3'
 
+alias netdatamac='netdata -c /usr/local/etc/netdata/netdata.conf'
+alias _netdata='netdata -c /usr/local/etc/netdata/netdata.conf'
+
+
 alias ls="command gls -lhFX --color=always --group-directories-first"
 #alias ls="command ls -lhF ${colorflag}"
 #alias ls="command ls  ${colorflag}"
