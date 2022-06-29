@@ -93,7 +93,7 @@ setTimeout(function(){
 
     <div style="width: 100%; height: 24vh; text-align: center; display: inline-block;">
         <div style="width: 100%; height: 15px; text-align: center; display: inline-block;">
-            <b>CPU On both servers</b>
+            <b>CPU On both devices</b>
         </div>
         <div style="width: 100%; height: calc(100% - 15px); text-align: center; display: inline-block;">
             <br/>
@@ -120,7 +120,7 @@ setTimeout(function(){
 
     <div style="width: 100%; height: 24vh; text-align: center; display: inline-block;">
         <div style="width: 100%; height: 15px; text-align: center; display: inline-block;">
-            <b>IPv4 traffic on both servers</b>
+            <b>IPv4 traffic on both devices</b>
         </div>
         <div style="width: 100%; height: calc(100% - 15px); text-align: center; display: inline-block;">
             <div data-netdata="wmi_plex.local.nic_Intel_R_Ethernet_Connection_11_I219_V_bandwidth"
@@ -148,9 +148,19 @@ setTimeout(function(){
 
     <div style="width: 100%; height: 24vh; text-align: center; display: inline-block;">
         <div style="width: 100%; height: 15px; text-align: center; display: inline-block;">
-            <b>USV Status</b>
+            <b>UPS Status</b>
         </div>
         <div style="width: 100%; height: calc(100% - 15px); text-align: center; display: inline-block;">
+            <div data-netdata="nut_apc_usv.input_voltage"
+                    data-host="http://10.0.0.80:19999"
+                    data-common-max="io"
+                    data-common-min="io"
+                    data-title="UPS Voltage"
+                    data-chart-library="dygraph"
+                    data-width="49%"
+                    data-height="100%"
+                    data-after="-300"
+                    ></div>
             <div data-netdata="nut_apc_usv.charge"
                     data-host="http://10.0.0.80:19999"
                     data-common-max="io"
@@ -161,10 +171,28 @@ setTimeout(function(){
                     data-height="100%"
                     data-after="-300"
                     ></div>
-            <div data-netdata="system.io"
-                    data-title="I/O on your MacBook"
+        </div>
+    </div>
+
+    <div style="width: 100%; height: 24vh; text-align: center; display: inline-block;">
+        <div style="width: 100%; height: 15px; text-align: center; display: inline-block;">
+        </div>
+        <div style="width: 100%; height: calc(100% - 15px); text-align: center; display: inline-block;">
+            <div data-netdata="nut_apc_usv.runtime"
+                    data-host="http://10.0.0.80:19999"
                     data-common-max="io"
                     data-common-min="io"
+                    data-title="UPS runtime"
+                    data-chart-library="dygraph"
+                    data-width="49%"
+                    data-height="100%"
+                    data-after="-300"
+                    ></div>
+            <div data-netdata="nut_apc_usv.load"
+                    data-host="http://10.0.0.80:19999"
+                    data-common-max="io"
+                    data-common-min="io"
+                    data-title="UPS load"
                     data-chart-library="dygraph"
                     data-width="49%"
                     data-height="100%"
