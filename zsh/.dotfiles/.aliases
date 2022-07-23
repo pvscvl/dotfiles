@@ -30,7 +30,8 @@ alias pdl='noglob youtube-dl -o "/Users/pascal/_pr0n/%(uploader)s/%(height)sp_%(
 
 alias scdl='noglob youtube-dl -o "/Users/pascal/youtube-dl_tmp/%(uploader)s/%(title)s.%(ext)s" --ignore-config --restrict-filenames --write-description --write-info-json --write-thumbnail --add-metadata --embed-thumbnail --extract-audio --audio-format mp3 --audio-quality 0 '
 
-
+alias speeduptm='sudo sysctl debug.lowpri_throttle_enabled=0'
+alias tmspeedup='sudo sysctl debug.lowpri_throttle_enabled=0'
 alias brewupdate='brew update && brew upgrade && brew cleanup'
 alias masupdate="mas upgrade"
 alias _update='brew update && brew upgrade && brew cleanup && mas upgrade && softwareupdate -l'
@@ -47,9 +48,9 @@ alias externalip="dig @resolver4.opendns.com myip.opendns.com +short"
 alias _dnswifi="ipconfig getsummary en0 | grep siaddr | cut -c 10- "
 alias _macwifi="ipconfig getsummary en0 | grep chaddr | cut -c 10- "
 alias _gwwifi="route -n get default | grep 'gateway' | awk '{print \$2}'"
-alias localiplan="ipconfig getifaddr en6"
-alias _dnslan="ipconfig getsummary en6 | grep siaddr | cut -c 10- "
-alias _maclan="ipconfig getsummary en6 | grep chaddr | cut -c 10- "
+alias localiplan="ipconfig getifaddr en8"
+alias _dnslan="ipconfig getsummary en8 | grep siaddr | cut -c 10- "
+alias _maclan="ipconfig getsummary en8 | grep chaddr | cut -c 10- "
 alias _gwlan="route -n get default | grep 'gateway' | awk '{print \$2}'"
 
 

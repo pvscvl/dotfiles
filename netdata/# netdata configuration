@@ -1,0 +1,287 @@
+# netdata configuration
+#
+# You can download the latest version of this file, using:
+#
+#  wget -O /etc/netdata/netdata.conf http://localhost:19999/netdata.conf
+# or
+#  curl -o /etc/netdata/netdata.conf http://localhost:19999/netdata.conf
+#
+# You can uncomment and change any of the options below.
+# The value shown in the commented settings, is the default value.
+#
+
+# global netdata configuration
+
+[global]
+	run as user = netdata
+	history = 3996
+	# glibc malloc arena max for plugins = 1
+	# libuv worker threads = 16
+	# hostname = mbpr13.local
+	# update every = 1
+	# memory mode = dbengine
+	# page cache size = 32
+	# dbengine disk space = 256
+	# dbengine multihost disk space = 512
+	# host access prefix = 
+	# enable metric correlations = no
+	# timezone = CEST
+	# process nice level = 19
+	# pthread stack size = 524288
+	# cleanup obsolete charts after seconds = 3600
+	# gap when lost iterations above = 1
+	# cleanup orphan hosts after seconds = 3600
+	# delete obsolete charts files = yes
+	# delete orphan hosts files = yes
+	# enable zero metrics = no
+	# dbengine extent pages = 64
+
+[directories]
+	# config = /usr/local/etc/netdata
+	# stock config = /usr/local/Cellar/netdata/1.35.1/lib/netdata/conf.d
+	# log = /usr/local/var/log/netdata
+	# web = /usr/local/Cellar/netdata/1.35.1/share/netdata/web
+	# cache = /usr/local/var/cache/netdata
+	# lib = /usr/local/var/lib/netdata
+	# home = /Users/pascal
+	# lock = /usr/local/var/lib/netdata/lock
+	# plugins = "/usr/local/Cellar/netdata/1.35.1/libexec/netdata/plugins.d" "/usr/local/etc/netdata/custom-plugins.d"
+	# registry = /usr/local/var/lib/netdata/registry
+	# health config = /usr/local/etc/netdata/health.d
+	# stock health config = /usr/local/Cellar/netdata/1.35.1/lib/netdata/conf.d/health.d
+
+[logs]
+	# debug flags = 0x0000000000000000
+	# debug = /usr/local/var/log/netdata/debug.log
+	# error = /usr/local/var/log/netdata/error.log
+	# access = /usr/local/var/log/netdata/access.log
+	# facility = daemon
+	# errors flood protection period = 1200
+	# errors to trigger flood protection = 200
+
+[environment variables]
+	# PATH = /usr/local/sbin:/usr/local/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+	# PYTHONPATH = 
+	# TZ = :/etc/localtime
+
+[sqlite]
+	# auto vacuum = INCREMENTAL
+	# synchronous = NORMAL
+	# journal mode = WAL
+	# temp store = MEMORY
+	# journal size limit = 16777216
+	# cache size = -2000
+
+[cloud]
+	# proxy = env
+	# mqtt5 = no
+	# aclk implementation = ng
+	# query thread count = 2
+
+[ml]
+	# enabled = no
+	# maximum num samples to train = 14400
+	# minimum num samples to train = 3600
+	# train every = 3600
+	# dbengine anomaly rate every = 30
+	# num samples to diff = 1
+	# num samples to smooth = 3
+	# num samples to lag = 5
+	# random sampling ratio = 0.20000
+	# maximum number of k-means iterations = 1000
+	# dimension anomaly score threshold = 0.99000
+	# host anomaly rate threshold = 0.02000
+	# minimum window size = 30.00000
+	# maximum window size = 600.00000
+	# idle window size = 30.00000
+	# window minimum anomaly rate = 0.25000
+	# anomaly event min dimension rate threshold = 0.05000
+	# hosts to skip from training = !*
+	# charts to skip from training = netdata.*
+	# stream anomaly detection charts = yes
+
+[health]
+	# silencers file = /usr/local/var/lib/netdata/health.silencers.json
+	# enabled = yes
+	# default repeat warning = never
+	# default repeat critical = never
+	# in memory max health log entries = 1000
+	# script to execute on alarm = /usr/local/Cellar/netdata/1.35.1/libexec/netdata/plugins.d/alarm-notify.sh
+	# enable stock health configuration = yes
+	# rotate log every lines = 2000
+	# run at least every seconds = 10
+	# postpone alarms during hibernation for seconds = 60
+
+[web]
+	bind to = *
+	# ssl key = /usr/local/etc/netdata/ssl/key.pem
+	# ssl certificate = /usr/local/etc/netdata/ssl/cert.pem
+	# tls version = 1.3
+	# tls ciphers = none
+	# ses max window = 15
+	# des max window = 15
+	# mode = static-threaded
+	# listen backlog = 4096
+	# default port = 19999
+
+	# disconnect idle clients after seconds = 60
+	# timeout for first request = 60
+	# accept a streaming request every seconds = 0
+	# respect do not track policy = no
+	# x-frame-options response header = 
+	# allow connections from = localhost *
+	# allow connections by dns = heuristic
+	# allow dashboard from = localhost *
+	# allow dashboard by dns = heuristic
+	# allow badges from = *
+	# allow badges by dns = heuristic
+	# allow streaming from = *
+	# allow streaming by dns = heuristic
+	# allow netdata.conf from = localhost fd* 10.* 192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.* 172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.* UNKNOWN
+	# allow netdata.conf by dns = no
+	 allow management from = localhost 10.*
+	# allow management by dns = heuristic
+	# enable gzip compression = yes
+	# gzip compression strategy = default
+	# gzip compression level = 3
+	# web server threads = 4
+	# web server max sockets = 64
+	# custom dashboard_info.js = 
+
+[registry]
+	# enabled = no
+	# netdata unique id file = /usr/local/var/lib/netdata/registry/netdata.public.unique.id
+	# registry db file = /usr/local/var/lib/netdata/registry/registry.db
+	# registry log file = /usr/local/var/lib/netdata/registry/registry-log.db
+	# registry save db every new entries = 1000000
+	# registry expire idle persons days = 365
+	# registry domain = 
+	# registry to announce = https://registry.my-netdata.io
+	# registry hostname = mbpr13-wifi.local
+	# verify browser cookies support = yes
+	# enable cookies SameSite and Secure = yes
+	# max URL length = 1024
+	# max URL name length = 50
+	# netdata management api key file = /usr/local/var/lib/netdata/netdata.api.key
+	# allow from = *
+	# allow by dns = heuristic
+
+[global statistics]
+	 update every = 1
+
+[plugins]
+	 timex = yes
+	 checks = no
+	 idlejitter = yes
+	 macos = yes
+	 enable running new plugins = yes
+	 check for new plugins every = 60
+	 slabinfo = no
+	 cups = yes
+	 charts.d = yes
+	 ioping = yes
+	 python.d = yes
+	 fping = yes
+	 statsd = yes
+
+[statsd]
+	# update every (flushInterval) = 1
+	# create private charts for metrics matching = *
+	# max private charts allowed = 200
+	# max private charts hard limit = 1000
+	# private charts memory mode = dbengine
+	# private charts history = 3996
+	# decimal detail = 1000
+	# disconnect idle tcp clients after seconds = 600
+	# private charts hidden = no
+	# histograms and timers percentile (percentThreshold) = 95.00000
+	# dictionaries max unique dimensions = 200
+	# add dimension for number of events received = no
+	# gaps on gauges (deleteGauges) = no
+	# gaps on counters (deleteCounters) = no
+	# gaps on meters (deleteMeters) = no
+	# gaps on sets (deleteSets) = no
+	# gaps on histograms (deleteHistograms) = no
+	# gaps on timers (deleteTimers) = no
+	# gaps on dictionaries (deleteDictionaries) = no
+	# statsd server max TCP sockets = 64
+	# listen backlog = 4096
+	# default port = 8125
+	# bind to = udp:localhost tcp:localhost
+
+[plugin:timex]
+	# update every = 10
+	# clock synchronization state = yes
+	# time offset = yes
+
+[plugin:cups]
+	# update every = 1
+	# command options = 
+
+[plugin:charts.d]
+	# update every = 1
+	# command options = 
+
+[plugin:idlejitter]
+	# loop time in ms = 20
+
+[plugin:ioping]
+	# update every = 1
+	# command options = 
+
+[plugin:python.d]
+	# update every = 1
+	# command options = 
+
+[plugin:fping]
+	# update every = 1
+	# command options = 
+
+[plugin:macos]
+	 sysctl = yes
+	 mach system management interface = yes
+	 iokit = yes
+
+[plugin:macos:sysctl]
+	 enable load average = yes
+	# system swap = yes
+    system swap = no
+	 bandwidth = yes
+	# ipv4 TCP packets = yes
+	# ipv4 TCP errors = yes
+	# ipv4 TCP handshake issues = yes
+	# ECN packets = auto
+	# TCP SYN cookies = auto
+	# TCP out-of-order queue = auto
+	# TCP connection aborts = auto
+	# ipv4 UDP packets = yes
+	# ipv4 UDP errors = yes
+	# ipv4 ICMP packets = yes
+	# ipv4 ICMP messages = yes
+	# ipv4 packets = yes
+	# ipv4 fragments sent = yes
+	# ipv4 fragments assembly = yes
+	 ipv4 errors = yes
+	ipv6 packets = no
+	ipv6 fragments sent = no
+	ipv6 fragments assembly = no
+	ipv6 errors = no
+	# icmp = auto
+	# icmp redirects = auto
+	# icmp errors = auto
+	# icmp echos = auto
+	# icmp router = auto
+	# icmp neighbor = auto
+	# icmp types = auto
+	 system uptime = yes
+	 space usage for all disks = yes
+	# inodes usage for all disks = yes
+
+[plugin:macos:mach_smi]
+	 cpu utilization = yes
+	 system ram = yes
+	 swap i/o = no
+	 memory page faults = no
+
+[plugin:macos:iokit]
+	disk i/o = yes
