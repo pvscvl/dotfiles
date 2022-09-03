@@ -1,6 +1,6 @@
 # Preparations for root-ssh login
 
-
+## As Pi User
 > `mkdir /home/pi/.ssh`
 > 
 > `chmod 700 /home/pi/.ssh`
@@ -11,6 +11,7 @@
 
 
 
+##As Root User
 > `mkdir /root/.ssh && chmod 700 /root/.ssh`
 > 
 >  ` echo ssh-rsa AAxsd user@host  >> /root/.ssh/authorized_keys2 `
@@ -19,6 +20,7 @@
 
 
 
+## Configure sshd_config for root login
 > `sudo sed -i "/#PermitRootLogin prohibit-password/ s//PermitRootLogin yes/g" /etc/ssh/sshd_config`
 > 
 > `sudo sed -i "/#PubkeyAuthentication yes/ s//PubkeyAuthentication yes/g" /etc/ssh/sshd_config`
