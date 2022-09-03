@@ -2,11 +2,11 @@
 ## Shows only ports using PoE and how much power is used. 
 
 As oneliner:
-`swctrl poe show | sed -n 3,5p && swctrl poe show | grep -w On && swctrl poe show | sed -n 5p && echo -n "Total PoE Usage (W): " && swctrl poe show | awk '{s+=$9}END{print s}'`
+>   `swctrl poe show | sed -n 3,5p && swctrl poe show | grep -w On && swctrl poe show | sed -n 5p && echo -n "Total PoE Usage (W): " && swctrl poe show | awk '{s+=$9}END{print s}'`
 
+![poe-usage](/poe-usage.png)
 
-
-Port  OpMode      HpMode    PwrLimit   Class   PoEPwr  PwrGood  Power(W)  Voltage(V)  Current(mA)
+`Port  OpMode      HpMode    PwrLimit   Class   PoEPwr  PwrGood  Power(W)  Voltage(V)  Current(mA)
                               (mW)
 ----  ------  ------------  --------  -------  ------  -------  --------  ----------  -----------
    1    Auto        Dot3at        -1  Class 4      On     Good      7.90       53.74       147.00
@@ -17,3 +17,4 @@ Port  OpMode      HpMode    PwrLimit   Class   PoEPwr  PwrGood  Power(W)  Voltag
   12    Auto        Dot3at        -1  Class 2      On     Good      1.50       53.57        28.00
 ----  ------  ------------  --------  -------  ------  -------  --------  ----------  -----------
 Total PoE Usage (W): 23.1
+`
