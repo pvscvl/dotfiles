@@ -11,7 +11,7 @@
 
 
 
-##As Root User
+## As Root User
 > `mkdir /root/.ssh && chmod 700 /root/.ssh`
 > 
 >  ` echo ssh-rsa AAxsd user@host  >> /root/.ssh/authorized_keys2 `
