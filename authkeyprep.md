@@ -11,7 +11,11 @@
 
 
 
-> `mkdir /root/.ssh && chmod 700 /root/.ssh && echo ssh-rsa AAxsd user@host  >> /root/.ssh/authorized_keys2 && chmod 600 /root/.ssh/authorized_keys2`
+> `mkdir /root/.ssh && chmod 700 /root/.ssh`
+> 
+>  ` echo ssh-rsa AAxsd user@host  >> /root/.ssh/authorized_keys2 `
+>  
+>  `chmod 600 /root/.ssh/authorized_keys2`
 
 
 
