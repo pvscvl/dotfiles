@@ -34,7 +34,7 @@
 >  
 >  `apt install --install-recommends linux-virtual `
 > 
->  `apt install linux-tools-virtual linux-cloud-tools-virtua `
+>  `apt install linux-tools-virtual linux-cloud-tools-virtual `
 > 
 >  `sed -i 'GRUB_CMDLINE_LINUX_DEFAULT="/ s//GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop"/g' /etc/default/grub `
 > 
