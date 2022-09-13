@@ -29,8 +29,9 @@
 > 
 > `sudo sed -i "/#AuthorizedKeysFile/ s//AuthorizedKeysFile/g" /etc/ssh/sshd_config`
 
-
-
+## Prep 
+>  `apt install qemu-guest-agent `
+>  
 >  `apt install --install-recommends linux-virtual `
 > 
 >  `apt install linux-tools-virtual linux-cloud-tools-virtua `
