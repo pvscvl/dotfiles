@@ -31,17 +31,17 @@
 
 
 
-> ´apt install --install-recommends linux-virtual´
+>  `apt install --install-recommends linux-virtual `
 > 
-> ´apt install linux-tools-virtual linux-cloud-tools-virtual´
+>  `apt install linux-tools-virtual linux-cloud-tools-virtua `
 > 
-> ´sed -i 'GRUB_CMDLINE_LINUX_DEFAULT="/ s//GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop"/g' /etc/default/grub´
+>  `sed -i 'GRUB_CMDLINE_LINUX_DEFAULT="/ s//GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop"/g' /etc/default/grub `
 > 
-> ´nano /etc/default/grub´
+>  `nano /etc/default/grub `
+>  
+>  `GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop" `
 > 
-> ´GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop"´
+>  `update-grub` 
 > 
-> ´update-grub´ 
-> 
-> ´reboot´
+> `reboot `
 
