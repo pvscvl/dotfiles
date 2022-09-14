@@ -15,7 +15,7 @@ CROSS="${RD}✗${CL}"
 clear
 echo -e "${BL}This script will Perform Post Install Routines.${CL}"
 while true; do
-    read -p "Start the PVE7 Post Install Script (y/n)?" yn
+    read -p "Start the Script (y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -57,6 +57,16 @@ function msg_ok() {
 
 clear
 header_info
+
+#if [ `cat /proc/cpuinfo | grep 'Common KVM processor'| uniq` -ne 0 ]; then
+#        echo -e "\n${RD}⚠ This version of Proxmox Virtual Environment is not supported"
+#        echo -e "Requires PVE Version: 7.XX${CL}"
+#        echo -e "\nExiting..."
+#        sleep 3
+#        exit
+#fi
+
+
 read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
@@ -91,7 +101,7 @@ fi
 read -r -p "SSH: allow root login? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "Disabling Enterprise Repository"
+msg_info "Enabling root login via SSH..."
 sleep 2
 
 sed -i "/#PermitRootLogin prohibit-password/ s//PermitRootLogin yes/g" /etc/ssh/sshd_config
@@ -111,7 +121,6 @@ mkdir /root/.ssh &>/dev/null
 chmod 700 /root/.ssh
 echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBPqZaPRjavF9wGzSUZVwDF639JbpDA1Ocy8YbV+LwIT6gvCW0b8I6tbILz2PuER9B2MQqnlGB3iZb0bCqRn7BB6s62E6WnWwWzRoM8zvbV6ftLitG2pu6xoBGuEnRWGpjxncE4CZEF5QjGilZkotavPloUxZytRy5AXHfeX9O9S3FAfdxP34QEYVgM1Xqv8t3SL0Jz9v2k7/3SOyPMKHr9UDKykZeEjn+0zQwztPwX94kK9LP2s/DhMDCLLHK+ksEisekCI5qpkAjdft/sImPOBFtKLR+fWZdr/mwhBGLX5O72Rso5qkpeIhZri4DkAHweUAUCLem12KtUHDpImyO2ajCm/Gq8qJPRqGOuHpsbxIVIOfy7hQJEknNaLtHmd0MGSKQY1aw1vDGTtK2ELAi9N+3G1oUAb2wYrA+6qM1+aiiis38gGSh8Fnzs3cFlwuuRIFOs0QlIRnpo9EbCqyR7HxDoNBMfq7CQrLmEATO7S1yPlvgzxGD7ES7rM+FOWk= install@TKM-MG-NB030 >> /root/.ssh/authorized_keys2
 chmod 600 /root/.ssh/authorized_keys2
-
 msg_ok "publickey provided"
 fi
 
