@@ -87,20 +87,41 @@ fi
 
 
 
+
+read -r -p "SSH: allow root login? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Disabling Enterprise Repository"
+sleep 2
+
+sed -i "/#PermitRootLogin prohibit-password/ s//PermitRootLogin yes/g" /etc/ssh/sshd_config
+sed -i "/#PubkeyAuthentication yes/ s//PubkeyAuthentication yes/g" /etc/ssh/sshd_config
+sed -i "/#AuthorizedKeysFile/ s//AuthorizedKeysFile/g" /etc/ssh/sshd_config
+
+msg_ok "root login allowd"
+fi
+
+
+read -r -p "Set SSH Keys for root <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "providing public key"
+sleep 2
+mkdir /root/.ssh &>/dev/null
+chmod 700 /root/.ssh
+echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBPqZaPRjavF9wGzSUZVwDF639JbpDA1Ocy8YbV+LwIT6gvCW0b8I6tbILz2PuER9B2MQqnlGB3iZb0bCqRn7BB6s62E6WnWwWzRoM8zvbV6ftLitG2pu6xoBGuEnRWGpjxncE4CZEF5QjGilZkotavPloUxZytRy5AXHfeX9O9S3FAfdxP34QEYVgM1Xqv8t3SL0Jz9v2k7/3SOyPMKHr9UDKykZeEjn+0zQwztPwX94kK9LP2s/DhMDCLLHK+ksEisekCI5qpkAjdft/sImPOBFtKLR+fWZdr/mwhBGLX5O72Rso5qkpeIhZri4DkAHweUAUCLem12KtUHDpImyO2ajCm/Gq8qJPRqGOuHpsbxIVIOfy7hQJEknNaLtHmd0MGSKQY1aw1vDGTtK2ELAi9N+3G1oUAb2wYrA+6qM1+aiiis38gGSh8Fnzs3cFlwuuRIFOs0QlIRnpo9EbCqyR7HxDoNBMfq7CQrLmEATO7S1yPlvgzxGD7ES7rM+FOWk= install@TKM-MG-NB030 >> /root/.ssh/authorized_keys2
+chmod 600 /root/.ssh/authorized_keys2
+
+msg_ok "publickey provided"
+fi
+
+
 ###############################################
 ##########################################
 #############################################################
 
 
 
-read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
-msg_info "Disabling Enterprise Repository"
-sleep 2
-sed -i "s/^deb/#deb/g" /etc/apt/sources.list.d/pve-enterprise.list
-msg_ok "Disabled Enterprise Repository"
-fi
 
 
 read -r -p "Add/Correct PVE7 Sources (sources.list)? <y/N> " prompt
