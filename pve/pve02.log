@@ -1,0 +1,30 @@
+
+##### PVE02 2022-09-14 22:06 ##########################
+CPU BOGOMIPS:      23199.08
+REGEX/SECOND:      3567294
+HD SIZE:           95.95 GB (/dev/mapper/pve-root)
+BUFFERED READS:    72.44 MB/sec
+AVERAGE SEEK TIME: 15.32 ms
+FSYNCS/SECOND:     38.89
+DNS EXT:           24.76 ms
+DNS INT:           1.49 ms (local)
+
+##### PVE02 2022-09-15 17:58 ##########################
+CPU BOGOMIPS:      23199.08
+REGEX/SECOND:      3553898
+HD SIZE:           95.95 GB (/dev/mapper/pve-root)
+BUFFERED READS:    80.21 MB/sec
+AVERAGE SEEK TIME: 13.23 ms
+FSYNCS/SECOND:     35.81
+DNS EXT:           41.40 ms
+DNS INT:           1.46 ms (local)
+
+##### PVE02 2022-09-15 17:59 ##########################
+CPU BOGOMIPS:      23199.08
+REGEX/SECOND:      3545901
+HD SIZE:           95.95 GB (/dev/mapper/pve-root)
+BUFFERED READS:    81.31 MB/sec
+AVERAGE SEEK TIME: 15.95 ms
+FSYNCS/SECOND:     23.90
+DNS EXT:           66.20 ms
+DNS INT:           1.24 ms (local)

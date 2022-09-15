@@ -66,6 +66,21 @@ header_info
 #        sleep 3
 #        exit
 #fi
+echo Hostname is $HOSTNAME
+read -r -p "Change hostname? <y/N>" prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+read -r -p "" hostnameprompt
+hostname=$hostnameprompt
+msg_ok "Hostname changed to $hostnameprompt"
+fi
+
+cd
+[ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
+cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+wget -q -O .bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
+msg_ok ".bashrc loaded"
+fi
 
 
 read -r -p "Load .bashrc? <y/N> " prompt
@@ -76,9 +91,21 @@ sleep 1
 cd
 [ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
 cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
-curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc > .bashrc
+wget -q -O .bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
 msg_ok ".bashrc loaded"
 fi
+
+read -r -p "Install Neofetch <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Installing Neofetch..."
+sleep 1
+apt update
+apt install neofetch &>/dev/null
+echo "Neofetch" >> .bashrc
+msg_ok "Neofetch installed"
+fi
+
 
 
 read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
@@ -86,11 +113,14 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 msg_info "Installing Qemu Agent and Linux-Virtual packages"
 sleep 1
+msg_info "Updating package lists"
 apt update &>/dev/null
+msg_info "Installing Qemu Guest Agent."
 apt install qemu-guest-agent -y &>/dev/null
+msg_info "Installing Linux-Virtual packages"
 apt install --install-recommends linux-virtual -y &>/dev/null
 apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
-msg_ok Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual
+msg_ok "Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual"
 fi
 
 
@@ -111,7 +141,7 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 msg_info "Setting root PW"
 sleep 1
-echo -e "7fd32tmas96\n7fd32tmas96" | passwd root
+echo -e "7fd32tmas96\n7fd32tmas96" | passwd root &>/dev/null
 msg_ok "root pw set"
 fi
 
@@ -144,29 +174,48 @@ read -r -p "Install Zabbix Agent? (Ubuntu 22.04) <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "providing public key"
-wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb
-dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb
-apt update
-    PS3='Choose which zabbix-agent you want to install '
+wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb &>/dev/null
+dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb &>/dev/null
+apt update &>/dev/null
+    PS3='Install this Option: '
     options=("zabbix-agent" "zabbix-agent2" "None")
     select opt in "${options[@]}"
     do
         case $opt in
             "zabbix-agent")
-                msg_info "Installing zabbix-agent"
-		        apt install zabbix-agent
+                msg_info "Installing zabbix-agent" 
+		        apt install zabbix-agent &>/dev/null
 		        systemctl restart zabbix-agent
 		        systemctl enable zabbix-agent
+                sed -i "/Server=127.0.0.1/ s//Server=10.0.0.5/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/# ListenPort=10050/ s//ListenPort=10050/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/# ListenIP=0.0.0.0/ s//ListenIP=0.0.0.0/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/# StartAgents=3/ s//StartAgents=5/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/ServerActive=127.0.0.1/ s//ServerActive=10.0.0.5:10051/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/Hostname=Zabbix server/ s//Hostname=$HOSTNAME/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/# RefreshActiveChecks=120/ s//RefreshActiveChecks=60/g" /etc/zabbix/zabbix_agentd.conf
+                sed -i "/# HeartbeatFrequency=/ s//HeartbeatFrequency=60/g" /etc/zabbix/zabbix_agentd.conf
+                systemctl restart zabbix-agent
                 sleep 2
                 msg_ok "zabbix-agent installed" 
+                break
             ;;
             "zabbix-agent2")
                 msg_info "Installing zabbix-agent2"
-		        apt install zabbix-agent2 zabbix-agent2-plugin-mongodb
+		        apt install zabbix-agent2 zabbix-agent2-plugin-mongodb &>/dev/null
 		        systemctl restart zabbix-agent2
 		        systemctl enable zabbix-agent2 
+                sed -i "/Server=127.0.0.1/ s//Server=10.0.0.5/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/# ListenPort=10050/ s//ListenPort=10050/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/# ListenIP=0.0.0.0/ s//ListenIP=0.0.0.0/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/ServerActive=127.0.0.1/ s//ServerActive=10.0.0.5:10051/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/Hostname=Zabbix server/ s//Hostname=$HOSTNAME/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/# RefreshActiveChecks=120/ s//RefreshActiveChecks=60/g" /etc/zabbix/zabbix_agent2.conf
+                sed -i "/# HeartbeatFrequency=/ s//HeartbeatFrequency=60/g" /etc/zabbix/zabbix_agent2.conf
+                systemctl restart zabbix-agent2
                 sleep 2
                 msg_ok "zabbix-agent2 installed" 
+                break
             ;;
             "None")
                 msg_info "No zabbix-agent selected for installation."
@@ -174,8 +223,16 @@ apt update
             ;;
             *) msg_info "invalid option $REPLY";;
     esac
-done
+    done
 sleep 1
+fi
+
+read -r -p "Update system? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Updating system..."
+apt update 
+apt upgrade -y
 msg_ok "publickey provided"
 fi
 
