@@ -81,10 +81,9 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
 sleep 1
-cd
-[ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
-cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
-wget -q -O .bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
+[ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
+cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+wget -q -O /root/.bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
 msg_ok ".bashrc loaded"
 fi
 
