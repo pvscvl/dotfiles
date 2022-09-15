@@ -165,7 +165,7 @@ then
 msg_info "providing public key"
 sleep 1
 chmod 700 /root/.ssh
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBPqZaPRjavF9wGzSUZVwDF639JbpDA1Ocy8YbV+LwIT6gvCW0b8I6tbILz2PuER9B2MQqnlGB3iZb0bCqRn7BB6s62E6WnWwWzRoM8zvbV6ftLitG2pu6xoBGuEnRWGpjxncE4CZEF5QjGilZkotavPloUxZytRy5AXHfeX9O9S3FAfdxP34QEYVgM1Xqv8t3SL0Jz9v2k7/3SOyPMKHr9UDKykZeEjn+0zQwztPwX94kK9LP2s/DhMDCLLHK+ksEisekCI5qpkAjdft/sImPOBFtKLR+fWZdr/mwhBGLX5O72Rso5qkpeIhZri4DkAHweUAUCLem12KtUHDpImyO2ajCm/Gq8qJPRqGOuHpsbxIVIOfy7hQJEknNaLtHmd0MGSKQY1aw1vDGTtK2ELAi9N+3G1oUAb2wYrA+6qM1+aiiis38gGSh8Fnzs3cFlwuuRIFOs0QlIRnpo9EbCqyR7HxDoNBMfq7CQrLmEATO7S1yPlvgzxGD7ES7rM+FOWk= install@TKM-MG-NB030" >> /root/.ssh/authorized_keys2
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJd7Z+LQJ9rqYoIGgVusQ2XBLsoJgW2wPbj5k+ZDOS2G9/eTuzX0RC8pXSH1ovJVVr8AxOFIeRZg4gMn2OcwIPskD1qCpNLWAv9ChoXEyn5TKW4gU+9Yngj4w+YRLUAHXjrcEaPA1zOzDwDxdasO3cNJpJ5jhwnqPtNpy7dSYg4kc5j52MNoYJYYwNUJMDBFPmPOj4bg7TW8D2DNYc2jGVsVPClhdA4IRyylW4ozJDLLlOk+nvbBUBWQs3WgpY8QsnHqaP+dz0s1TAW1Vw4YAQGcVac2/dEb+UoCuHu9D4cKSRv+ObL5FYb4TtJogZY7+00Jf3W1Bl33lEyH/AZJrhaTO7mp5HTHajYVBtwsICZQl5VH+RQ0P8ERmXF+3aSd8UQkGl2JUXQfCLaHbr39dsB7DFQd8NgoAIkzpQhCv9JH/JtTt1Luafkegn+owlhJpTd7IribzkWofLB6M+7pky2m1jTtH5cScBDHhMGse3aj28PAJ4Ywe7G4QujiLnphc= zhr@wsred" >> /root/.ssh/authorized_keys2
 chmod 600 /root/.ssh/authorized_keys2
 msg_ok "publickey provided"
 fi
@@ -173,9 +173,19 @@ fi
 read -r -p "Install Zabbix Agent? (Ubuntu 22.04) <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "providing public key"
-wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb &>/dev/null
-dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb &>/dev/null
+msg_info "Loading .deb-file"
+    if [[ $(lsb_release -rs) == "22.04" ]]; 
+        then
+	    wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb &>/dev/null
+	    dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb &>/dev/null
+    fi
+
+    if [[ $(lsb_release -rs) == "20.04" ]]; 
+        then
+	    wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu20.04_all.deb &>/dev/null
+	    dpkg -i zabbix-release_6.2-2+ubuntu20.04_all.deb &>/dev/null
+    fi
+
 apt update &>/dev/null
     PS3='Install this Option: '
     options=("zabbix-agent" "zabbix-agent2" "None")
@@ -232,6 +242,7 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 msg_info "Updating system..."
 apt update 
+msg_info "Upgrading system..."
 apt upgrade -y
 msg_ok "publickey provided"
 fi
@@ -245,14 +256,10 @@ msg_ok "Completed Post Install Routines"
 
 
 
-###############################################
-##########################################
-#############################################################
 
 
 
-
-
+<< '////'
 read -r -p "Add/Correct PVE7 Sources (sources.list)? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
@@ -315,5 +322,8 @@ msg_ok "Completed Post Install Routines"
 reboot
 fi
 
+
 sleep 2
 msg_ok "Completed Post Install Routines"
+////
+
