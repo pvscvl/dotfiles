@@ -75,7 +75,7 @@ hostname=$hostnameprompt
 msg_ok "Hostname changed to $hostnameprompt"
 fi
 
-cd
+
 [ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
 cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
 wget -q -O .bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
@@ -107,7 +107,6 @@ msg_ok "Neofetch installed"
 fi
 
 
-
 read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
@@ -122,7 +121,6 @@ apt install --install-recommends linux-virtual -y &>/dev/null
 apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
 msg_ok "Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual"
 fi
-
 
 
 read -r -p "Remove Ubuntu Booting Bug? <y/N> " prompt
