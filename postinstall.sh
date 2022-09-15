@@ -51,6 +51,11 @@ function msg_info() {
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
+function msg_info2() {
+    local msg="$1"
+    echo -e " ${HOLD} ${YW}${msg}..."
+}
+
 function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
@@ -159,23 +164,26 @@ then
     msg_ok "publickey provided"
 fi
 
-read -r -p "Install Zabbix Agent? (Ubuntu 22.04) <y/N> " prompt
+read -r -p "Install Zabbix Agent?<y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "Loading .deb-file"
+
     if [[ $(lsb_release -rs) == "22.04" ]]; 
         then
+        msg_info "Prepare package for Ubuntu 22.04"
 	    wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb &>/dev/null
 	    dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb &>/dev/null
     fi
 
     if [[ $(lsb_release -rs) == "20.04" ]]; 
         then
+        msg_info "Prepare package for Ubuntu 20.04"
 	    wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu20.04_all.deb &>/dev/null
 	    dpkg -i zabbix-release_6.2-2+ubuntu20.04_all.deb &>/dev/null
     fi
 
 apt update &>/dev/null
+    echo ""
     PS3='Install this Option: '
     options=("zabbix-agent" "zabbix-agent2" "None")
     select opt in "${options[@]}"
@@ -183,7 +191,7 @@ apt update &>/dev/null
         case $opt in
             "zabbix-agent")
                 msg_info "Installing zabbix-agent" 
-		        apt install zabbix-agent &>/dev/null
+		        apt install zabbix-agent -y &>/dev/null
 		        systemctl restart zabbix-agent
 		        systemctl enable zabbix-agent
                 sed -i "/Server=127.0.0.1/ s//Server=10.0.0.5/g" /etc/zabbix/zabbix_agentd.conf
@@ -201,7 +209,7 @@ apt update &>/dev/null
             ;;
             "zabbix-agent2")
                 msg_info "Installing zabbix-agent2"
-		        apt install zabbix-agent2 zabbix-agent2-plugin-mongodb &>/dev/null
+		        apt install zabbix-agent2 zabbix-agent2-plugin-mongodb -y &>/dev/null
 		        systemctl restart zabbix-agent2
 		        systemctl enable zabbix-agent2 
                 sed -i "/Server=127.0.0.1/ s//Server=10.0.0.5/g" /etc/zabbix/zabbix_agent2.conf
@@ -230,10 +238,10 @@ read -r -p "Update system? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Updating system..."
-apt update 
+apt update &>/dev/null
 msg_info "Upgrading system..."
-apt upgrade -y
-msg_ok "publickey provided"
+apt upgrade -y &>/dev/null
+msg_ok "Upgrade complete."
 fi
 
 
