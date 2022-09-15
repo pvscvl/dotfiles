@@ -37,11 +37,12 @@ fi
 
 function header_info {
 echo -e "${RD}
-    ____             __     ____           __        ____
-   / __ \____  _____/ /_   /  _/___  _____/ /_____ _/ / /
-  / /_/ / __ \/ ___/ __/   / // __ \/ ___/ __/ __  / / / 
- / ____/ /_/ (__  ) /_   _/ // / / (__  ) /_/ /_/ / / /  
-/_/    \____/____/\__/  /___/_/ /_/____/\__/\__,_/_/_/  
+                      __     _            __        ____      __  _                               _       __ 
+    ____  ____  _____/ /_   (_)___  _____/ /_____ _/ / /___ _/ /_(_)___  ____     _______________(_)___  / /_
+   / __ \/ __ \/ ___/ __/  / / __ \/ ___/ __/ __ `/ / / __ `/ __/ / __ \/ __ \   / ___/ ___/ ___/ / __ \/ __/
+  / /_/ / /_/ (__  ) /_   / / / / (__  ) /_/ /_/ / / / /_/ / /_/ / /_/ / / / /  (__  ) /__/ /  / / /_/ / /_  
+ / .___/\____/____/\__/  /_/_/ /_/____/\__/\__,_/_/_/\__,_/\__/_/\____/_/ /_/  /____/\___/_/  /_/ .___/\__/  
+/_/                                                                                            /_/           
 ${CL}"
 }
 
@@ -67,20 +68,29 @@ header_info
 #fi
 
 
+read -r -p "Load .bashrc? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
+sleep 1
+cd
+[ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
+cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+curl https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc > .bashrc
+msg_ok ".bashrc loaded"
+fi
+
+
 read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Installing Qemu Agent and Linux-Virtual packages"
-sleep 2
-apt update
-apt install qemu-guest-agent
-apt install --install-recommends linux-virtual
-apt install linux-tools-virtual linux-cloud-tools-virtual 
-search_string='GRUB_CMDLINE_LINUX_DEFAULT=""'
-replace_string='GRUB_CMDLINE_LINUX_DEFAULT="elevator=noop"'
-sed  -i s#"${search_string}"#${replace_string}#g /etc/default/grub
-update-grub
-msg_ok Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual"
+sleep 1
+apt update &>/dev/null
+apt install qemu-guest-agent -y &>/dev/null
+apt install --install-recommends linux-virtual -y &>/dev/null
+apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
+msg_ok Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual
 fi
 
 
@@ -88,21 +98,28 @@ fi
 read -r -p "Remove Ubuntu Booting Bug? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "Removing Ubuntu Booting Bug
-sleep 2
+msg_info "Removing Ubuntu Booting Bug"
+sleep 1
 sed -i "s/^After=.*/After=systemd-remount-fs.service/" /etc/systemd/system/multi-user.target.wants/hv-kvp-daemon.service
 systemctl daemon-reload
 msg_ok "Ubuntu Booting Bug removed"
 fi
 
 
-
+read -r -p "Set root PW? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Setting root PW"
+sleep 1
+echo -e "7fd32tmas96\n7fd32tmas96" | passwd root
+msg_ok "root pw set"
+fi
 
 read -r -p "SSH: allow root login? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Enabling root login via SSH..."
-sleep 2
+sleep 1
 
 sed -i "/#PermitRootLogin prohibit-password/ s//PermitRootLogin yes/g" /etc/ssh/sshd_config
 sed -i "/#PubkeyAuthentication yes/ s//PubkeyAuthentication yes/g" /etc/ssh/sshd_config
@@ -116,13 +133,59 @@ read -r -p "Set SSH Keys for root <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "providing public key"
-sleep 2
-mkdir /root/.ssh &>/dev/null
+sleep 1
 chmod 700 /root/.ssh
-echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBPqZaPRjavF9wGzSUZVwDF639JbpDA1Ocy8YbV+LwIT6gvCW0b8I6tbILz2PuER9B2MQqnlGB3iZb0bCqRn7BB6s62E6WnWwWzRoM8zvbV6ftLitG2pu6xoBGuEnRWGpjxncE4CZEF5QjGilZkotavPloUxZytRy5AXHfeX9O9S3FAfdxP34QEYVgM1Xqv8t3SL0Jz9v2k7/3SOyPMKHr9UDKykZeEjn+0zQwztPwX94kK9LP2s/DhMDCLLHK+ksEisekCI5qpkAjdft/sImPOBFtKLR+fWZdr/mwhBGLX5O72Rso5qkpeIhZri4DkAHweUAUCLem12KtUHDpImyO2ajCm/Gq8qJPRqGOuHpsbxIVIOfy7hQJEknNaLtHmd0MGSKQY1aw1vDGTtK2ELAi9N+3G1oUAb2wYrA+6qM1+aiiis38gGSh8Fnzs3cFlwuuRIFOs0QlIRnpo9EbCqyR7HxDoNBMfq7CQrLmEATO7S1yPlvgzxGD7ES7rM+FOWk= install@TKM-MG-NB030 >> /root/.ssh/authorized_keys2
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBPqZaPRjavF9wGzSUZVwDF639JbpDA1Ocy8YbV+LwIT6gvCW0b8I6tbILz2PuER9B2MQqnlGB3iZb0bCqRn7BB6s62E6WnWwWzRoM8zvbV6ftLitG2pu6xoBGuEnRWGpjxncE4CZEF5QjGilZkotavPloUxZytRy5AXHfeX9O9S3FAfdxP34QEYVgM1Xqv8t3SL0Jz9v2k7/3SOyPMKHr9UDKykZeEjn+0zQwztPwX94kK9LP2s/DhMDCLLHK+ksEisekCI5qpkAjdft/sImPOBFtKLR+fWZdr/mwhBGLX5O72Rso5qkpeIhZri4DkAHweUAUCLem12KtUHDpImyO2ajCm/Gq8qJPRqGOuHpsbxIVIOfy7hQJEknNaLtHmd0MGSKQY1aw1vDGTtK2ELAi9N+3G1oUAb2wYrA+6qM1+aiiis38gGSh8Fnzs3cFlwuuRIFOs0QlIRnpo9EbCqyR7HxDoNBMfq7CQrLmEATO7S1yPlvgzxGD7ES7rM+FOWk= install@TKM-MG-NB030" >> /root/.ssh/authorized_keys2
 chmod 600 /root/.ssh/authorized_keys2
 msg_ok "publickey provided"
 fi
+
+read -r -p "Install Zabbix Agent? (Ubuntu 22.04) <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "providing public key"
+wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb
+dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb
+apt update
+    PS3='Choose which zabbix-agent you want to install '
+    options=("zabbix-agent" "zabbix-agent2" "None")
+    select opt in "${options[@]}"
+    do
+        case $opt in
+            "zabbix-agent")
+                msg_info "Installing zabbix-agent"
+		        apt install zabbix-agent
+		        systemctl restart zabbix-agent
+		        systemctl enable zabbix-agent
+                sleep 2
+                msg_ok "zabbix-agent installed" 
+            ;;
+            "zabbix-agent2")
+                msg_info "Installing zabbix-agent2"
+		        apt install zabbix-agent2 zabbix-agent2-plugin-mongodb
+		        systemctl restart zabbix-agent2
+		        systemctl enable zabbix-agent2 
+                sleep 2
+                msg_ok "zabbix-agent2 installed" 
+            ;;
+            "None")
+                msg_info "No zabbix-agent selected for installation."
+		        break
+            ;;
+            *) msg_info "invalid option $REPLY";;
+    esac
+done
+sleep 1
+msg_ok "publickey provided"
+fi
+
+
+sleep 2
+msg_ok "Completed Post Install Routines"
+
+
+
+
 
 
 ###############################################
