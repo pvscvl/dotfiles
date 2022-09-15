@@ -76,13 +76,6 @@ msg_ok "Hostname changed to $hostnameprompt"
 fi
 
 
-[ ! -d "./dotfiles" ] && mkdir -p "./dotfiles"
-cp .bashrc ./dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
-wget -q -O .bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
-msg_ok ".bashrc loaded"
-fi
-
-
 read -r -p "Load .bashrc? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
