@@ -93,7 +93,7 @@ then
     apt update &>/dev/null
     msg_info "(Patience...)"
     apt install neofetch -y &>/dev/null
-    echo "Neofetch" >> .bashrc
+    echo "neofetch" >> .bashrc
     msg_ok "Neofetch installed"
 fi
 
