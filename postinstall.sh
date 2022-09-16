@@ -22,13 +22,6 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-#if [ `cat /proc/cpuinfo | grep 'Common KVM processor'| uniq` -ne 1 ]; then
-#        echo -e "\n${RD}⚠ This version of Proxmox Virtual Environment is not supported"
-#        echo -e "Requires PVE Version: 7.XX${CL}"
-#        echo -e "\nExiting..."
-#        sleep 3
-#        exit
-#fi
 if [[ "${UID}" -ne 0 ]]; then
     echo " You need to run this script as root"
     exit 1
@@ -85,9 +78,9 @@ read -r -p "Load .bashrc? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
     then
     sleep 1
-    msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
-    [ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
-    cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+#    msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
+#    [ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
+#    cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
     wget -q -O /root/.bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
     msg_ok ".bashrc loaded"
 fi
