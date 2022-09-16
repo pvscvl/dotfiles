@@ -12,7 +12,7 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
-clear
+
 echo -e "${BL}This script will Perform Post Install Routines.${CL}"
 while true; do
     read -p "Start the Script (y/n)?" yn
@@ -27,15 +27,19 @@ if [[ "${UID}" -ne 0 ]]; then
     exit 1
 fi
 
-
 function header_info {
-echo -e "${RD}
-  _ _                                         
- | (_)_ __  _   ___  __  _ __  _ __ ___ _ __  
- | | | '_ \| | | \ \/ / | '_ \| '__/ _ \ '_ \ 
- | | | | | | |_| |>  <  | |_) | | |  __/ |_) |
- |_|_|_| |_|\__,_/_/\_\ | .__/|_|  \___| .__/ 
-                        |_|            |_|    
+    echo -e "${RD}
+ ____           _      _           _        _ _ 
+|  _ \ ___  ___| |_   (_)_ __  ___| |_ __ _| | |
+| |_) / _ \/ __| __|  | | '_ \/ __| __/ _' | | |
+|  __/ (_) \__ \ |_   | | | | \__ \ || (_| | | |
+|_|   \___/|___/\__|  |_|_| |_|___/\__\__,_|_|_|                                                
+ ____                   ____            _       _   
+|  _ \ _ __ ___ _ __   / ___|  ___ _ __(_)_ __ | |_ 
+| |_) | '__/ _ \ '_ \  \___ \ / __| '__| | '_ \| __|
+|  __/| | |  __/ |_) |  ___) | (__| |  | | |_) | |_ 
+|_|   |_|  \___| .__/  |____/ \___|_|  |_| .__/ \__|
+               |_|                       |_|        
 ${CL}"
 }
 
@@ -53,112 +57,134 @@ function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+function msg_no() {
+    local msg="$1"
+    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
 
-clear
 header_info
 
-#if [ `cat /proc/cpuinfo | grep 'Common KVM processor'| uniq` -ne 0 ]; then
-#        echo -e "\n${RD}⚠ This version of Proxmox Virtual Environment is not supported"
-#        echo -e "Requires PVE Version: 7.XX${CL}"
-#        echo -e "\nExiting..."
-#        sleep 3
-#        exit
-#fi
 echo Hostname is $HOSTNAME
 read -r -p "Change hostname? <y/N>" prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+    then    
+        echo -n "New hostname:  "
         read -r -p "" hostnameprompt
         #hostname=$hostnameprompt
         echo $hostnameprompt > /etc/hostname
         msg_ok "Hostname changed to $hostnameprompt"
+    else
+    msg_no "Hostname unchanged"
 fi
 
 
 read -r -p "Load .bashrc? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-    then
-    sleep 1
-#    msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
-#    [ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
-#    cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
-    wget -q -O /root/.bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
-    msg_ok ".bashrc loaded"
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+        then
+    #    msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
+    #    [ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
+    #    cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+        wget -q -O /root/.bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
+        msg_ok ".bashrc loaded"
+        else
+        msg_no ".bashrc unchanged"
 fi
 
 read -r -p "Install Neofetch <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
-    msg_info "Installing Neofetch.."
-    sleep 1
-    apt update &>/dev/null
-    msg_info "(Patience...)"
-    apt install neofetch -y &>/dev/null
-    echo "neofetch" >> .bashrc
-    msg_ok "Neofetch installed"
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+    then
+        msg_info "Installing Neofetch"
+        apt update &>/dev/null
+        apt install neofetch -y &>/dev/null
+        echo "neofetch" >> .bashrc
+        msg_ok "Neofetch installed"
+    else
+    msg_no "Neofetch not installed"
 fi
 
 
-read -r -p "Install Qemu Agent and Linux-Virtual packages? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+
+read -r -p "Install qemu-guest-agent? <y/N> " prompt
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+        then
+        msg_info "Installing qemu-guest-agent"
+        apt update &>/dev/null
+        apt install qemu-guest-agent -y &>/dev/null
+        msg_ok "Installed qemu-guest-agent"
+    else
+    msg_no "qemu-guest-agent not installed"
+    fi
+
+
+
+if [[ $(lsb_release -rs) == "20.04" ||  $(lsb_release -rs) == "22.04" ]]
 then
-    msg_info "Installing Qemu Agent and Linux-Virtual packages"
-    sleep 1
-    msg_info "Updating package lists"
-    apt update &>/dev/null
-    msg_info "Installing Qemu Guest Agent."
-    apt install qemu-guest-agent -y &>/dev/null
-    msg_info "Installing Linux-Virtual packages"
-    apt install --install-recommends linux-virtual -y &>/dev/null
-    apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
-    msg_ok "Installed qemu-guest-agent, linux-virtual, linux-tools-virtual and linux-cloud-tools-virtual"
+    read -r -p "Install linux-virtual packages? <y/N> " prompt
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+        then
+        msg_info "Installing linux-virtual packages"
+        apt update &>/dev/null
+        apt install --install-recommends linux-virtual -y &>/dev/null
+        apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
+        msg_ok "Installed linux-virtual packages"
+    else
+    msg_no "Linux-virtual packages not installed"
+    fi
 fi
 
 
-read -r -p "Remove Ubuntu Booting Bug? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+
+
+if [[ $(lsb_release -rs) == "20.04" ||  $(lsb_release -rs) == "22.04" ]]
 then
-    msg_info "Removing Ubuntu Booting Bug"
-    sleep 1
+    read -r -p "Apply workaround for ubuntu booting bug? <y/N> " prompt
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+    then
+    msg_info "Applying ubuntu boot workaround"
     sed -i "s/^After=.*/After=systemd-remount-fs.service/" /etc/systemd/system/multi-user.target.wants/hv-kvp-daemon.service
     systemctl daemon-reload
-    msg_ok "Ubuntu Booting Bug removed"
+    msg_ok "Ubuntu boot workaround applied"
+    else
+    msg_no "Ubuntu boot workaround not applied"
+    fi
 fi
-
 
 read -r -p "Set root PW? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
     msg_info "Setting root PW"
-    sleep 1
     echo -e "7fd32tmas96\n7fd32tmas96" | passwd root &>/dev/null
     msg_ok "root pw set"
+else
+msg_no "root password unchanged"
 fi
 
 read -r -p "SSH: allow root login? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-    msg_info "Enabling root login via SSH..."
-    sleep 1
+    msg_info "Enabling root login via SSH"
     sed -i "/#PermitRootLogin prohibit-password/ s//PermitRootLogin yes/g" /etc/ssh/sshd_config
     sed -i "/#PubkeyAuthentication yes/ s//PubkeyAuthentication yes/g" /etc/ssh/sshd_config
     sed -i "/#AuthorizedKeysFile/ s//AuthorizedKeysFile/g" /etc/ssh/sshd_config
-    msg_ok "root login allowd"
+    msg_ok "SSH Login with root is now permitted"
+else
+msg_no "/etc/ssh/sshd_config unchanged"
 fi
 
 
 read -r -p "Set SSH Keys for root <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-    msg_info "providing public key"
-    sleep 1
+    msg_info "Loading public key"
     chmod 700 /root/.ssh
     echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJd7Z+LQJ9rqYoIGgVusQ2XBLsoJgW2wPbj5k+ZDOS2G9/eTuzX0RC8pXSH1ovJVVr8AxOFIeRZg4gMn2OcwIPskD1qCpNLWAv9ChoXEyn5TKW4gU+9Yngj4w+YRLUAHXjrcEaPA1zOzDwDxdasO3cNJpJ5jhwnqPtNpy7dSYg4kc5j52MNoYJYYwNUJMDBFPmPOj4bg7TW8D2DNYc2jGVsVPClhdA4IRyylW4ozJDLLlOk+nvbBUBWQs3WgpY8QsnHqaP+dz0s1TAW1Vw4YAQGcVac2/dEb+UoCuHu9D4cKSRv+ObL5FYb4TtJogZY7+00Jf3W1Bl33lEyH/AZJrhaTO7mp5HTHajYVBtwsICZQl5VH+RQ0P8ERmXF+3aSd8UQkGl2JUXQfCLaHbr39dsB7DFQd8NgoAIkzpQhCv9JH/JtTt1Luafkegn+owlhJpTd7IribzkWofLB6M+7pky2m1jTtH5cScBDHhMGse3aj28PAJ4Ywe7G4QujiLnphc= zhr@wsred" >> /root/.ssh/authorized_keys2
     chmod 600 /root/.ssh/authorized_keys2
-    msg_ok "publickey provided"
+    msg_ok "Publickey provided"
+else
+msg_no "SSH Keys unchanged"
 fi
 
-read -r -p "Install Zabbix Agent?<y/N> " prompt
+read -r -p "Install Zabbix Agent? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 
@@ -197,7 +223,6 @@ apt update &>/dev/null
                 sed -i "/# RefreshActiveChecks=120/ s//RefreshActiveChecks=60/g" /etc/zabbix/zabbix_agentd.conf
                 sed -i "/# HeartbeatFrequency=/ s//HeartbeatFrequency=60/g" /etc/zabbix/zabbix_agentd.conf
                 systemctl restart zabbix-agent
-                sleep 2
                 msg_ok "zabbix-agent installed" 
                 break
             ;;
@@ -214,33 +239,37 @@ apt update &>/dev/null
                 sed -i "/# RefreshActiveChecks=120/ s//RefreshActiveChecks=60/g" /etc/zabbix/zabbix_agent2.conf
                 sed -i "/# HeartbeatFrequency=/ s//HeartbeatFrequency=60/g" /etc/zabbix/zabbix_agent2.conf
                 systemctl restart zabbix-agent2
-                sleep 2
                 msg_ok "zabbix-agent2 installed" 
                 break
             ;;
             "None")
-                msg_info "No zabbix-agent selected for installation."
+                msg_no "No zabbix-agent selected for installation"
 		        break
             ;;
             *) msg_info "invalid option $REPLY";;
     esac
     done
-sleep 1
+else
+msg_no "zabbix-agent not installed"
 fi
 
 read -r -p "Update system? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "Updating system..."
+msg_info "Updating package lists"
 apt update &>/dev/null
-msg_info "Upgrading system..."
+msg_info "Updating system"
 apt upgrade -y &>/dev/null
-msg_ok "Upgrade complete."
+msg_ok "Update complete"
+else
+msg_no "System was not updated"
 fi
 
-
-sleep 2
-msg_ok "Completed Post Install Routines"
+echo ""
+sleep 1
+echo ""
+sleep 1
+msg_ok "Completed Post Install Preparation Routines"
 
 
 
