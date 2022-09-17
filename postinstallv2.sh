@@ -14,10 +14,33 @@
     OVER="\\r\\033[K"
     detected_os=$(grep '^ID=' /etc/os-release | cut -d '=' -f2 | tr -d '"')
     detected_version=$(grep VERSION_ID /etc/os-release | cut -d '=' -f2 | tr -d '"')
-YW=`echo "\033[33m"`
+RD=`echo "\033[01;32m"`
 CL=`echo "\033[m"`
+
+function msg_info() {
+    local msg="$1"
+    printf "%b ${msg}\\n" "${INFO}"
+}
+
+function msg_quest() {
+    local msg="$1"
+    printf "%b ${msg}" "${QUEST}"
+}
+
+function msg_ok() {
+    local msg="$1"
+    printf "%b ${msg}\\n" "${TICK}"
+}
+function msg_no() {
+    local msg="$1"
+    printf "%b ${msg}\\n" "${CROSS}"
+}
+
+
+
+
 function header_info {
-    echo -e "${YW}
+    echo -e "${RD}
  ____           _      _           _        _ _ 
 |  _ \ ___  ___| |_   (_)_ __  ___| |_ __ _| | |
 | |_) / _ \/ __| __|  | | '_ \/ __| __/ _' | | |
@@ -32,14 +55,13 @@ function header_info {
 ${CL}"
 }
 
-
-printf "%b This script will perform post-installation routines.\\n" "${INFO}"
+msg_info "This script will perform post-installation routines."
 while true; do
-   printf "%b%b Start the script? " "${QUEST}"; read -p "<y/n> " yn
+    msg_quest "Start the script? "; read -p "<y/n> " yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
-        * )  printf "%b Please answer yes or no\\n\\n" "${INFO}";;
+        * )  msg_ok "Please answer yes or no";echo "";
     esac
 done
 if [[ "${EUID}" -ne 0 ]]; then
@@ -51,19 +73,64 @@ if [[ "${EUID}" -ne 0 ]]; then
 fi
 
 clear
+YW=`echo "\033[33m"`
 header_info
+sleep 1
 
-   printf "%b %b Load .bashrc? <y/N> " "${QUEST}"; read -r -p "" prompt
+
+msg_quest "Load .bashrc? <y/N> "; read -r -p "" prompt
+#printf "%b %b Load .bashrc? <y/N> " "${QUEST}"; read -r -p "" prompt
     if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-        then
-    #    msg_info "Moving existing .bashrc in ./dotfiles and load .bashrc from github"
-    #    [ ! -d "/root/dotfiles" ] && mkdir -p "root/dotfiles"
-    #    cp /root/.bashrc /root/dotfiles/bashrc-$(date +\%Y-\%m-\%d_\%H\%M).txt
+    then
         wget -q -O /root/.bashrc https://raw.githubusercontent.com/pvscvl/dotfiles/main/.bashrc 
-        printf "%b .bashrc loaded\\n" "${TICK}"
-        else
-        printf "%b .bashrc unchanged\\n" "${INFO}"
+        msg_ok ".bashrc loaded"
+        sleep 1
+    else
+        msg_info ".bashrc unchanged"
+        sleep 1
+    fi
+
+
+if  grep -q "KVM processor" /proc/cpuinfo ; then
+    msg_quest "Install qemu-guest-agent? <y/N> " ; read -r -p "" prompt
+        if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+            then
+            msg_info "Installing qemu-guest-agent"
+            apt update &>/dev/null
+           apt install qemu-guest-agent -y &>/dev/null
+           msg_ok "Installed qemu-guest-agent"
+            sleep 1
+            else
+             msg_no "qemu-guest-agent not installed"
+            if [[ $detected_os == "ubuntu" ]]
+            then
+            msg_info "Installing linux-virtual packages"
+                apt update &>/dev/null
+                apt install --install-recommends linux-virtual -y &>/dev/null
+                apt install linux-tools-virtual linux-cloud-tools-virtual -y &>/dev/null
+                msg_ok "Installed linux-virtual packages"
+                sleep 1
+            else
+                msg_info "Linux-virtual packages not compatible with OS"
+                msg_info "Only installed qemu-guest-agent"
+                sleep 1
+            fi
+        fi
 fi
 
-
-
+if [[ $detected_os == "ubuntu" &&  $detected_version == "22.04" ]]
+    then
+    msg_quest "Apply workaround for ubuntu booting bug? <y/N> "; read -r -p "" prompt
+    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+    then
+    msg_info "Applying ubuntu boot workaround"
+    sed -i "s/^After=.*/After=systemd-remount-fs.service/" /etc/systemd/system/multi-user.target.wants/hv-kvp-daemon.service
+    systemctl daemon-reload
+    sleep 1
+    msg_ok "Ubuntu boot workaround applied"
+    sleep 1
+    else
+    msg_no "Ubuntu boot workaround not applied"
+    sleep 1
+    fi
+fi
