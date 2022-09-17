@@ -60,12 +60,14 @@ header_info
 if test -f /etc/debian_version; then
     debver=`cat /etc/debian_version`
     debianversion=`echo ${debver:0:2}`
-    if $debianversion == "10"; then
+    if ["$debianversion" == "10"];
+        then
     msg_info "Prepare package for Debian 10 (Buster)"
         wget https://repo.zabbix.com/zabbix/6.2/debian/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bdebian10_all.deb
         dpkg -i zabbix-release_6.2-2+debian10_all.deb
     fi
-    if $debianversion == "11"; then
+    if ["$debianversion" == "11"];
+        then
             msg_info "Prepare package for Debian 11 (Bullseye)"
             wget https://repo.zabbix.com/zabbix/6.2/debian/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bdebian11_all.deb
             dpkg -i zabbix-release_6.2-2+debian11_all.deb

@@ -13,6 +13,13 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 
+
+
+
+
+
+
+
 echo -e "${BL}This script will Perform Post Install Routines.${CL}"
 while true; do
     read -p "Start the Script (y/n)?" yn
@@ -90,18 +97,23 @@ read -r -p "Load .bashrc? <y/N> " prompt
         msg_no ".bashrc unchanged"
 fi
 
-read -r -p "Install Neofetch <y/N> " prompt
-    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-    then
-        msg_info "Installing Neofetch"
-        apt update &>/dev/null
-        apt install neofetch -y &>/dev/null
-        echo "neofetch" >> .bashrc
-        msg_ok "Neofetch installed"
-    else
-    msg_no "Neofetch not installed"
-fi
 
+if command -v Neofetch &> /dev/null
+then
+    read -r -p "Install Neofetch <y/N> " prompt
+        if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+        then
+            msg_info "Installing Neofetch"
+            apt update &>/dev/null
+            apt install neofetch -y &>/dev/null
+            echo "neofetch" >> .bashrc
+            msg_ok "Neofetch installed"
+        else
+            msg_no "Neofetch not installed"
+        fi
+    else
+    echo "neofetch already installed"
+fi
 
 
 read -r -p "Install qemu-guest-agent? <y/N> " prompt
@@ -275,6 +287,16 @@ msg_ok "Completed Post Install Preparation Routines"
 
 
 
+
+if command -v neofetch &> /dev/null
+then
+
+            XXXX
+
+else
+echo "neofetch already installed"
+
+fi
 
 
 
