@@ -11,5 +11,5 @@
 >
 >> check if string exists in file and if its a comment or not.
 >
->> tbc
+>> .Export in bashrc verlinken, dort var für Dinge wie bei rrd 
 
