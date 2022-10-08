@@ -38,6 +38,34 @@ function Generate-Password
 }
 
 
+function Generate-shortPassword 
+    {
+    function Get-RandomCharacters($length, $characters) 
+        {
+        $random = 1..$length | ForEach-Object { Get-Random -Maximum $characters.length }
+        $private:ofs=""
+        return [String]$characters[$random]
+        }
+  
+    $pvscvlpasswordpt1 = Get-RandomCharacters -length 4 -characters 'ABCDEFGHKLMNPRQSTUVWXYZ'
+    $pvscvlpasswordpt2 = Get-RandomCharacters -length 4 -characters 'abcdefghikmnoprstuvwxyz'
+    $pvscvlpasswordpt3 = Get-RandomCharacters -length 4 -characters '1234567890'
+        $pvscvlpassword = $pvscvlpasswordpt1
+        $pvscvlpassword += "-"
+        $pvscvlpassword += $pvscvlpasswordpt2
+        $pvscvlpassword += "-"
+        $pvscvlpassword += $pvscvlpasswordpt3
+    
+    echo -n $pvscvlpassword | Set-Clipboard
+    Write-Host ""
+    Write-Host ""
+    #Write-Host "`t $pvscvlpassword"
+    Write-Host "$pvscvlpassword"
+    Write-Host ""
+}
+
+
+
 
 #12Characters-2Symbols, 3Uppercase Chars, 5 Lowercase Chars, 2 Digits
 #generated password is also copied to clipboard
