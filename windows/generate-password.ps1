@@ -15,9 +15,11 @@ function Generate-Password
         $private:ofs=""
         return [String]$characters[$random]
         }
+
   
-    $pvscvlpasswordpt1 = Get-RandomCharacters -length 1 -characters 'ABCDEFGHKLMNPRQSTUVWXYZ'
-    $pvscvlpasswordpt1 += Get-RandomCharacters -length 3 -characters 'abcdefghikmnoprstuvwxyz'
+#    $pvscvlpasswordpt1 = Get-RandomCharacters -length 1 -characters 'ABCDEFGHKLMNPRQSTUVWXYZ'
+#    $pvscvlpasswordpt1 += Get-RandomCharacters -length 3 -characters 'abcdefghikmnoprstuvwxyz'
+	$pvscvlpasswordpt1 = Get-RandomCharacters -length 4 -characters 'ABCDEFGHKLMNPRQSTUVWXYZ'
     $pvscvlpasswordpt2 = Get-RandomCharacters -length 4 -characters 'abcdefghikmnoprstuvwxyz'
     $pvscvlpasswordpt3 = Get-RandomCharacters -length 4 -characters 'abcdefghikmnoprstuvwxyz'
     $pvscvlpasswordpt4 = Get-RandomCharacters -length 4 -characters '1234567890'
@@ -86,7 +88,7 @@ function Generate-Password12Chars
         return $outputString 
         }
 
-    $pvscvlpassword = Get-RandomCharacters -length 2 -characters '!%#_'
+    $pvscvlpassword = Get-RandomCharacters -length 2 -characters '!%#_-'
     $pvscvlpassword += Get-RandomCharacters -length 3 -characters 'ABCDEFGHKLMNPRSTUVWXYZ'
     $pvscvlpassword += Get-RandomCharacters -length 5 -characters 'abcdefghikmnoprstuvwxyz'
     $pvscvlpassword += Get-RandomCharacters -length 2 -characters '1234567890'
